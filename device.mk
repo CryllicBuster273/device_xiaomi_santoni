@@ -515,7 +515,8 @@ PRODUCT_BOOT_JARS += \
 
 # XiaomiParts
 PRODUCT_PACKAGES += \
-    XiaomiParts
+    XiaomiParts \
+    XiaomiAddon
 
 # Perf Jars
 PRODUCT_BOOT_JARS += \
