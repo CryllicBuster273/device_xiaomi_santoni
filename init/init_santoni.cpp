@@ -28,12 +28,20 @@
    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <cstdlib>
+#include <fstream>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
 #include <sys/sysinfo.h>
 
+
+#include <android-base/file.h>
 #include <android-base/properties.h>
+#include <android-base/strings.h>
+
 #include "vendor_init.h"
 #include "property_service.h"
 #include "android/log.h"
@@ -44,6 +52,7 @@ char const *heapsize;
 char const *heapminfree;
 char const *heapmaxfree;
 
+using android::base::GetProperty;
 using android::init::property_set;
 
 void check_device()
@@ -87,6 +96,26 @@ void property_override_dual(char const system_prop[], char const vendor_prop[],
     property_override(vendor_prop, value);
 }
 
+void init_target_properties()
+{
+    std::ifstream fin;
+    std::string buf;
+
+    std::string product = GetProperty("ro.product.name", "");
+    if (product.find("santoni") == std::string::npos)
+       return;
+
+    fin.open("/proc/cmdline");
+    while (std::getline(fin, buf, ' '))
+       if (buf.find("board_id") != std::string::npos)
+            break;
+    fin.close();
+
+    if (buf.find("S88536CA2") != std::string::npos) {
+        property_override_dual("ro.product.model", "ro.product.vendor.model", "Redmi 4");
+    }
+}
+
 void vendor_load_properties()
 {
     check_device();
@@ -101,4 +130,6 @@ void vendor_load_properties()
     // fingerprint
     property_override("ro.build.description", "santoni-user 7.1.2 N2G47H V9.5.10.0.NAMMIFD release-keys");
     property_override_dual("ro.build.fingerprint", "ro.vendor.build.fingerprint", "Xiaomi/santoni/santoni:7.1.2/N2G47H/V9.5.10.0.NAMMIFD:user/release-keys");
+
+    init_target_properties();
 }
