@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2017 The LineageOS Project
-# Copyright (C) 2020 The PixelExperience Project
+# Copyright (C) 2020 The PixysOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -499,8 +499,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
 
 # Wallpapers
+ifeq ($(BUILD_WITH_GAPPS),true)
 PRODUCT_PACKAGES += \
     PixelLiveWallpaperPrebuilt
+endif
 
 # Wi-Fi Display
 PRODUCT_PACKAGES += \
