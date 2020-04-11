@@ -1,20 +1,2 @@
 [
-  {
-    "remote": "github",
-    "repository": "pranaya2005/vendor_xiaomi_santoni",
-    "target_path": "vendor/xiaomi",
-    "branch": "ten"
-  },
-  {
-    "remote": "github",
-    "repository": "PixelExperience-Devices/kernel_xiaomi_santoni",
-    "target_path": "kernel/xiaomi/santoni",
-    "branch": "ten"
-  },
-  {
-    "remote": "github",
-    "repository": "LineageOS/android_packages_resources_devicesettings",
-    "target_path": "packages/resources_devicesettings",
-    "branch": "lineage-17.1"
-  }
 ]
